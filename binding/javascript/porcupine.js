@@ -26,8 +26,10 @@ let Porcupine = (function () {
   let sampleRate = null;
   let version = null;
 
-  if (PorcupineOptions !== undefined) {
-    callback = PorcupineOptions.callback;
+  if (typeof PorcupineOptions !== "undefined") {
+    if (PorcupineOptions !== null) {
+      callback = PorcupineOptions.callback;
+    }
   }
 
   let porcupineModule = PorcupineModule();
@@ -51,9 +53,10 @@ let Porcupine = (function () {
     )();
     version = Module.cwrap("pv_porcupine_wasm_version", "string", [])();
 
-    if (callback !== null) {
-      callback();
-    }
+    if (typeof callback !== "undefined")
+      if (callback !== null) {
+        callback();
+      }
   });
 
   let isLoaded = function () {
